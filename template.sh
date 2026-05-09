@@ -10,4 +10,4 @@ touch app.py
 touch research/trial.ipynb
 touch requirements.txt
 
-echo "Directory structure created successfully!"
+echo "Directory structure created successfully!" 
