@@ -8,6 +8,8 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
 from src.prompt import system_prompt
+from langchain.memory import ConversationBufferMemory
+from langchain.chains import ConversationalRetrievalChain
 import os
 
 
@@ -56,18 +58,29 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
-# Create QA chain
-question_answer_chain = create_stuff_documents_chain(
-    chatModel,
-    prompt
+# # Create QA chain
+# question_answer_chain = create_stuff_documents_chain(
+#     chatModel,
+#     prompt
+# )
+
+# # Create RAG chain
+# rag_chain = create_retrieval_chain(
+#     retriever,
+#     question_answer_chain
+# )
+# Create memory
+memory = ConversationBufferMemory(
+    memory_key="chat_history",
+    return_messages=True
 )
 
-# Create RAG chain
-rag_chain = create_retrieval_chain(
-    retriever,
-    question_answer_chain
+# Create conversational RAG chain
+rag_chain = ConversationalRetrievalChain.from_llm(
+    llm=chatModel,
+    retriever=retriever,
+    memory=memory
 )
-
 
 @app.route("/")
 def index():
@@ -80,9 +93,16 @@ def chat():
 
     print("User:", msg)
 
+    # response = rag_chain.invoke({
+    #     "input": msg
+    # })
+
+    # print("Response:", response["answer"])
+
+    # return str(response["answer"])
     response = rag_chain.invoke({
-        "input": msg
-    })
+    "question": msg
+     })
 
     print("Response:", response["answer"])
 
