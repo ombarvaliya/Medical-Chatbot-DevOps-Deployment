@@ -641,6 +641,7 @@ docker run -p 8080:8080 medical-chatbot
 
 <p align="center"> <img src="images/chatbot-interface.png" width="90%" alt="Chatbot Interface"/> </p>
 <p align="center"> <img src="images/chatbot-interface2.png" width="90%" alt="Chatbot Interface2"/> </p>
+<p align="center"> <img src="images/chatbot-interface3.png" width="90%" alt="Chatbot Interface2"/> </p>
 
 ---
 
